@@ -8,30 +8,35 @@ const isObject = (value: any): value is object => {
   return value !== null && typeof value === "object";
 };
 
+/**
+ * Recursively removes `null` or `undefined` values from an array or an object.
+ * @param value Any object or array.
+ * @param filter A function that customizes which values are removed.
+ */
 export const deepPrune = <T>(
   value: T,
   filter: (value: any) => boolean = isNil
 ): DeepPartial<T> => {
   if (Array.isArray(value)) {
-    return value.reduce((acc, v) => {
-      const nextValue = deepPrune(v, filter);
+    const result: any = [];
+    for (let i = 0; i < value.length; i++) {
+      const pruned = deepPrune(value[i], filter);
 
-      if (filter(nextValue)) {
-        return acc;
+      if (!filter(pruned)) {
+        result.push(pruned);
       }
-
-      return [...acc, nextValue]
-    }, []);
+    }
+    return result;
   }
 
   if (isObject(value)) {
-    return Object.entries(value).reduce<any>((acc, [k, v]) => {
-      if (filter(v)) {
-        return acc;
+    const result: any = {};
+    for (let key in value) {
+      if (value.hasOwnProperty(key) && !filter(value[key])) {
+        result[key] = deepPrune(value[key]);
       }
-
-      return Object.assign(acc, { [k]: deepPrune(v, filter) });
-    }, {});
+    }
+    return result;
   }
 
   return value as any;

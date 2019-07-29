@@ -13,6 +13,7 @@
   "scripts": {
     "build": "tsc -b",
     "test": "jest",
+    "bench": "tsc -b && node bench.js",
     "format": "prettier --write 'src/**/*.ts'",
     "format:check": "prettier --check 'src/**/*.ts'",
     "prepublishOnly": "rm -rf lib && tsc -b"
