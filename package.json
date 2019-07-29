@@ -1,0 +1,22 @@
+{
+  "name": "deep-prune",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "test": "jest",
+    "format": "prettier --write 'src/**/*.ts'",
+    "format:check": "prettier --check 'src/**/*.ts'",
+    "prepublishOnly": "rm -rf lib && tsc -b"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.3"
+  }
+}
