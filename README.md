@@ -1,6 +1,17 @@
-# deep-prune [![Build Status](https://travis-ci.org/rzane/deep-prune.svg?branch=master)](https://travis-ci.org/rzane/deep-prune)
+<h1 align="center">deep-prune</h1>
+
+<div align="center">
+
+![Build](https://github.com/rzane/deep-prune/workflows/Build/badge.svg)
+![Version](https://img.shields.io/npm/v/deep-prune)
+![Size](https://img.shields.io/bundlephobia/minzip/deep-prune)
+![License](https://img.shields.io/npm/l/deep-prune)
+
+</div>
 
 Deeply prunes `null` or `undefined` values from an array or object.
+
+You can also customize the values that get pruned.
 
 ## Usage
 
