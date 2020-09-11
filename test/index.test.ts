@@ -16,6 +16,10 @@ describe("deepPrune", () => {
       });
     });
 
+    it("prunes depth-first", () => {
+      expect(deepPrune({ foo: { bar: "" } }, isEmpty)).toEqual({});
+    });
+
     it("accepts a custom filter", () => {
       expect(deepPrune({ foo: 1, bar: 2 }, (v) => v === 1)).toEqual({ bar: 2 });
     });
@@ -52,6 +56,10 @@ describe("deepPrune", () => {
 
     it("accepts a custom filter", () => {
       expect(deepPrune([1, 2, 3], (v) => v === 1)).toEqual([2, 3]);
+    });
+
+    it("prunes depth-first", () => {
+      expect(deepPrune([{ bar: "" }], isEmpty)).toEqual([]);
     });
 
     it("does not remove false", () => {

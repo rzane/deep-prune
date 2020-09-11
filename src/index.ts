@@ -26,26 +26,23 @@ export const deepPrune = (
   filter: (value: any) => boolean = isNil
 ): any => {
   if (Array.isArray(value)) {
-    const result: any = [];
+    const result: any[] = [];
     for (let i = 0; i < value.length; i++) {
       const pruned = deepPrune(value[i], filter);
-
-      if (!filter(pruned)) {
-        result.push(pruned);
-      }
+      if (!filter(pruned)) result.push(pruned);
     }
     return result;
   }
 
   if (isPlainObject(value)) {
-    const result: any = {};
+    const result: { [key: string]: any } = {};
     for (let key in value) {
-      if (value.hasOwnProperty(key) && !filter(value[key])) {
-        result[key] = deepPrune(value[key]);
-      }
+      if (!value.hasOwnProperty(key)) continue;
+      const pruned = deepPrune(value[key], filter);
+      if (!filter(pruned)) result[key] = pruned;
     }
     return result;
   }
 
-  return value as any;
+  return value;
 };
