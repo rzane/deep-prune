@@ -72,25 +72,11 @@ describe("deepPrune", () => {
   });
 
   describe("class", () => {
-    class Person {
-      constructor(public name: string | null) {}
+    class Person {}
 
-      // Demonstrates that methods are discarded.
-      getName() {
-        return this.name;
-      }
-    }
-
-    it("removes null values", () => {
-      const person = new Person(null);
-      expect(person.name).toEqual(null);
-      expect(deepPrune(person)).toEqual({});
-    });
-
-    it("does not remove present values", () => {
-      const person = new Person("Ray");
-      expect(person.name).toEqual("Ray");
-      expect(deepPrune(person)).toEqual({ name: "Ray" });
+    it("does not prune classes", () => {
+      const person = new Person();
+      expect(deepPrune({ person })).toEqual({ person });
     });
   });
 
