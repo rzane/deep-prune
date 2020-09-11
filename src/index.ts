@@ -1,10 +1,20 @@
-const isNil = (value: any): value is null | undefined => {
-  return value === null || typeof value === "undefined";
-};
+const isPlainObject = (value: any): value is Object =>
+  Object.prototype.toString.call(value) === "[object Object]";
 
-const isPlainObject = (value: any): value is Object => {
-  return Object.prototype.toString.call(value) === "[object Object]";
-};
+/**
+ * Tests if a value is `null` or `undefined`.
+ */
+export const isNil = (value: any): value is null | undefined =>
+  value === null || value === undefined;
+
+/**
+ * Tests if a value is `null`, `undefined`, `""`, `[]`, or `{}`.
+ */
+export const isEmpty = (value: any): boolean =>
+  isNil(value) ||
+  value === "" ||
+  (Array.isArray(value) && value.length === 0) ||
+  (isPlainObject(value) && Object.keys(value).length === 0);
 
 /**
  * Recursively removes `null` or `undefined` values from an array or an object.

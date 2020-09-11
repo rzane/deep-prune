@@ -1,4 +1,4 @@
-import { deepPrune } from "../src";
+import { deepPrune, isNil, isEmpty } from "../src";
 
 describe("deepPrune", () => {
   describe("object", () => {
@@ -12,12 +12,12 @@ describe("deepPrune", () => {
 
     it("removes values deeply", () => {
       expect(deepPrune({ foo: [{ bar: null, buzz: 1 }] })).toEqual({
-        foo: [{ buzz: 1 }]
+        foo: [{ buzz: 1 }],
       });
     });
 
     it("accepts a custom filter", () => {
-      expect(deepPrune({ foo: 1, bar: 2 }, v => v === 1)).toEqual({ bar: 2 });
+      expect(deepPrune({ foo: 1, bar: 2 }, (v) => v === 1)).toEqual({ bar: 2 });
     });
 
     it("does not remove false", () => {
@@ -51,7 +51,7 @@ describe("deepPrune", () => {
     });
 
     it("accepts a custom filter", () => {
-      expect(deepPrune([1, 2, 3], v => v === 1)).toEqual([2, 3]);
+      expect(deepPrune([1, 2, 3], (v) => v === 1)).toEqual([2, 3]);
     });
 
     it("does not remove false", () => {
@@ -101,4 +101,28 @@ describe("deepPrune", () => {
       expect(deepPrune(undefined)).toEqual(undefined);
     });
   });
+});
+
+test("isNil", () => {
+  expect(isNil(null)).toBe(true);
+  expect(isNil(undefined)).toBe(true);
+  expect(isNil(false)).toBe(false);
+  expect(isNil(true)).toBe(false);
+  expect(isNil([])).toBe(false);
+  expect(isNil("")).toBe(false);
+  expect(isNil(0)).toBe(false);
+});
+
+test("isEmpty", () => {
+  expect(isEmpty(null)).toBe(true);
+  expect(isEmpty(undefined)).toBe(true);
+  expect(isEmpty(false)).toBe(false);
+  expect(isEmpty(true)).toBe(false);
+  expect(isEmpty([])).toBe(true);
+  expect(isEmpty([1])).toBe(false);
+  expect(isEmpty("")).toBe(true);
+  expect(isEmpty(" ")).toBe(false);
+  expect(isEmpty(0)).toBe(false);
+  expect(isEmpty({})).toBe(true);
+  expect(isEmpty({ foo: undefined })).toBe(false);
 });
