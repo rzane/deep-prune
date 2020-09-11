@@ -1,5 +1,3 @@
-import { DeepPartial } from "utility-types";
-
 const isNil = (value: any): value is null | undefined => {
   return value === null || typeof value === "undefined";
 };
@@ -13,10 +11,10 @@ const isObject = (value: any): value is object => {
  * @param value Any object or array.
  * @param filter A function that customizes which values are removed.
  */
-export const deepPrune = <T>(
-  value: T,
+export const deepPrune = (
+  value: any,
   filter: (value: any) => boolean = isNil
-): DeepPartial<T> => {
+): any => {
   if (Array.isArray(value)) {
     const result: any = [];
     for (let i = 0; i < value.length; i++) {
