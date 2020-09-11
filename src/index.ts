@@ -2,8 +2,8 @@ const isNil = (value: any): value is null | undefined => {
   return value === null || typeof value === "undefined";
 };
 
-const isObject = (value: any): value is object => {
-  return value !== null && typeof value === "object";
+const isPlainObject = (value: any): value is Object => {
+  return Object.prototype.toString.call(value) === "[object Object]";
 };
 
 /**
@@ -27,7 +27,7 @@ export const deepPrune = (
     return result;
   }
 
-  if (isObject(value)) {
+  if (isPlainObject(value)) {
     const result: any = {};
     for (let key in value) {
       if (value.hasOwnProperty(key) && !filter(value[key])) {
